@@ -20,6 +20,11 @@ function createInitialState(): State {
   };
 }
 
+function getPlayerInput(currentPlayer: Player): string {
+  const input = prompt(`\nPlayer ${currentPlayer}, choose a square.`);
+  return input.toLocaleLowerCase();
+}
+
 // function main(): void {
 //   console.log("Welcome to Tic-Tac-Toe Game!!!\n");
 
