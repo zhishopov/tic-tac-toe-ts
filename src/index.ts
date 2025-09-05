@@ -99,22 +99,46 @@ function handlePlayerTurn(state: State): State | "quit" {
   return nextState;
 }
 
-// function main(): void {
-//   console.log("Welcome to Tic-Tac-Toe Game!!!\n");
+function askPlayAgain(): boolean | "quit" {
+  const answer = prompt(
+    "\nPlay again? (y/n) Or press 'q' to quit: "
+  ).toLowerCase();
+  if (answer === "q") return "quit";
+  if (answer === "y") return true;
+  if (answer === "n") return false;
+  console.log("Please answer y or n (or q to quit).");
+  return askPlayAgain();
+}
 
-//   // Each square is either X, O or null
-//   const emptyBoard: Square[] = Array<Square>(9).fill(null);
+function gameLoop(): void {
+  let currentState: State = createInitialState();
 
-//   const initialState: State = {
-//     board: emptyBoard,
-//     currentPlayer: "X",
-//     movesCount: 0, // keep track of moves
-//   };
+  while (true) {
+    const result = handlePlayerTurn(currentState);
+    if (result === "quit") {
+      return;
+    }
 
-//   const boardAsText: string = showBoard(initialState.board);
-//   console.log(boardAsText);
+    const lastPlayer = currentState.currentPlayer;
+    const gameEnded =
+      checkWin(result.board, lastPlayer) || isDraw(result.board);
 
-//   console.log("\nCurrent player:", initialState.currentPlayer);
-// }
+    currentState = result;
 
-// main();
+    if (gameEnded) {
+      const playAgain = askPlayAgain();
+      if (playAgain === "quit" || playAgain === false) {
+        console.log("\nThanks for playing!");
+        return;
+      }
+      currentState = createInitialState();
+    }
+  }
+}
+
+function main(): void {
+  console.log("Welcome to Tic-Tac-Toe Game!!!");
+  gameLoop();
+}
+
+main();
