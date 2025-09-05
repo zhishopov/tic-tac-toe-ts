@@ -22,6 +22,10 @@
   "homepage": "https://github.com/zhishopov/tic-tac-toe-ts#readme",
   "devDependencies": {
     "@types/node": "^24.3.1",
+    "@types/prompt-sync": "^4.2.3",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
   }
 }
